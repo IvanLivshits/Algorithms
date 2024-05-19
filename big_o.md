@@ -254,3 +254,52 @@ consider the entire inout. After the first step, we only consider `n / 2` elemen
 `n / 4` elements, and so on. At each step, we are reducing our search space by 50%, which gives us a logarithmic time complexity.
 
 <hr>
+
+# Analyzing space complexity
+
+When you initialize variables like arrays or strings, your algorithm is allocating memory. We never count the space used
+by the input (it is bad practice to modify the input), and usually don't count the space used by the output (the answer)
+unless an interviewer asks us to.
+
+> In the below examples, the code is only allocating memory so that we can analyze the space complexity, so we will consider
+> everything we allocated as part of the space complexity (there is no "answer").
+
+```js
+// Given an integer array "arr" with length n
+
+for ( let i = 0; i < arr.length; i++ ) {
+    console.log(arr[i]);
+}
+```
+
+This algorithm has a space complexity *O(1)*. The only space allocated is an integer variable `i`, which is constant relative
+to *n*.
+
+```ts
+// Given an integer array "arr" with length n
+
+const nums: number[] = [];
+
+const oneHundredth = nums.length / 100;
+
+for ( let i = 0; i < oneHundredth; i++ ) {
+  arr.push[nums[i]]
+}
+```
+
+This algorithm has a space complexity of *O(n)*. The array `nums` stores the first 1% of numbers in `arr`. This gives a 
+space complexity of *O(n / 100) = O(n)*.
+
+```ts
+// Gives integer arrays "arr1" with length n and "arr2" with length m,
+
+const grid: number[][] = [[]];
+
+for ( let i = 0; i < arr1.length; i++ ) {
+  for ( let j = 0; j < arr2.length; j++ ) {
+    grid[i][j] = arr[i] * arr[j];
+  }
+}
+```
+
+This algorithm has a space complexity of *O(n * m)*. We are creating a `grid` that has dimensions *n * m*.
