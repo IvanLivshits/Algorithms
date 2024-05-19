@@ -87,3 +87,67 @@ When written, the function is wrapped by a capital *O*. Here are some example co
 
 These functions represent the complexity. For example, you would say "The time complexity of my algorithm
 is *O(n)*" or "The space complexity of my algorithm is *O(n<sup>2</sup>)*.
+
+<hr>
+
+# Calculating complexity
+
+Roughly, your functions calculates the number of operations or amount of memory (depending on if you are analyzing time
+or space complexity, respectively) your algorithm consumes relative to the input size. Using the example from above (find the largest number
+in `nums`), we have a time complexity of *O(n)*. The algorithm involves iterating over each element in `nums`,
+so if define *n* as the length of `nums`, our algorithm uses approximately *n* steps. If we pass an array with a length `10`,
+it will perform approximately `10` steps. If we pass an array with length of `10,000,000,000` it will perform approximately
+`10,000,000,000` steps.
+
+> Time complexity is not meant to be an **exact** representation of the number of operations. For example, we need
+> to initialize `maxNum = 0` and we also needed to output `maxNum` at the end. Thus, you could argue that for an array
+> of length `10`, we need `12` operations. This **is not the point** of time complexity. The point of time
+> complexity is to describe how the number of operations changes as the input changes. The number of iterations we do depends
+> on `nums`, but initializing `maxNum = 0` doesn't.
+
+Being able to analyze an algorithm and calculate its time and space complexity is a crucial skill. Interviewers will 
+**almost always** ask you for your algorithm's complexity to check that you actually understand your algorithm and didn't
+just memorize/copy the code. Being able to analyze an algorithm also enables you to determine what parts of it can be
+improved.
+
+**Rules**
+
+There are a few rules when it comes to calculating complexity. First, **we ignore constants**. That means *O(999999999n) = O(8n) = O(n)*.
+Why do we do this? Imagine you had two algorithms. Algorithm *A* uses approximately *n* operations and algorithm *B*
+uses approximately *5n* operations.
+
+When *n = 100*, algorithm *A* uses 100 operations and algorithm *B* uses 500 operations. What happens if we double *n*?
+Then algorithm *A* uses 200 operations and algorithm *B* uses 1000 operations. As you can see, when we double the value
+of *n* both algorithms require double the amount of operations. If we were to 10x the value of *n* both algorithms would
+require 10x more operations. 
+
+Remember: the point of complexity is to analyze the algorithm **as the input changes**. We don't care that algorithm *B*
+is 5x slower than algorithm *A*. For both algorithms, as the input size increases, the number of operations required
+increases **linearly**. That's what we care about. Thus, both algorithms are *O(n)*.
+
+The second rule is that we consider the complexity as the variables **tend to infinity**. When we have addition/subtraction
+between terms of the **same** variable, we ignore all terms except the most powerful one. For example, 
+*O(2<sup>n</sup> + n<sup>2</sup> - 500n) = O(n<sup>2</sup>)*. Why? Because as *n* tends to infinity, 2<sup>n</sup> becomes
+so large that the other two terms are effectively zero in comparison.
+
+Let's say that we had an algorithm that required *n + 500* operations. It has a time complexity of *O(n)*. When *n* is
+small, let's say *n = 5* the *+500* terms is very significant - but we don't care about that. We need to perform the analysis
+as if *n* is tending toward infinity, and in that scenario, the 500 is nothing.
+
+> The best possible complexity is *O(1)*, called "constant time" or "constant space". It means that the algorithm ALWAYS
+> uses the same amount of resources, regardless of the input.
+> 
+> Note that a constant time complexity doesn't necessarily mean that an algorithm is fast, it just means that its runtime
+> is independent of the input size.
+
+When talking about complexity, there are normally three cases:
+
+1. Best case scenario;
+2. Average case;
+3. Worst case scenario;
+
+In most algorithms, all three of these will be equal, but some algorithms will have them differ. If you have to choose 
+only one to represent the algorithm's time or space complexity, never choose the best case scenario. It is most correct
+to use the worst case scenario, but you should be able to talk about the difference between the cases.
+
+<hr>
