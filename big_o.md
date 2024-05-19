@@ -151,3 +151,106 @@ only one to represent the algorithm's time or space complexity, never choose the
 to use the worst case scenario, but you should be able to talk about the difference between the cases.
 
 <hr>
+
+# Analyzing time complexity
+
+Let's look at some example algorithms in JS and talk about their time complexities.
+
+```js
+// Given an integer array "arr" with length n,
+
+for ( let i = 0; i < arr.length; i++ ) {
+    console.log(arr[i]);
+}
+```
+
+This algorithm has a time complexity of *O(n)*. In each for loop iteration, we are performing a print, which costs *O(1)*.
+The for loop iterates *n* times, which gives a time complexity of *O(1 * n) = O(n)*.
+
+```js
+// Given an integer array "arr" with length n,
+
+for ( let i = 0; i < arr.length; i++ ) {
+    for ( let j = 0; j < 500.000; j++ ) {
+        console.log(arr[j]);
+    }
+}
+```
+
+This algorithm has a time complexity of *O(n)*. In each for loop iteration, we are performing a print, which costs *O(1)*.
+This for loop iterates 500.000 times, which means each outer for loop iteration coasts *O(500000) = O(1)*. The outer for
+loop iterates *n* times, which gives a time complexity *O(n)*.
+
+Even though the first two algorithms *technically* have the same time complexity, in reality the second algorithm is **much**
+slower than the first one. It's correct to say that the time complexity is *O(n)*, but it's important to be able to 
+discuss the differences between practicality and theory.
+
+```js
+// Given an integer array "arr" with length n,
+
+for ( let i = 0; i < arr.length; i++ ) {
+    for ( let j = 0; j < arr.length; j++ ) {
+        console.log(arr[i] * arr[j]);
+    }
+}
+```
+
+This algorithm has a time complexity of *O(n<sup>2</sup>)*. In each inner for loop iteration, we are performing a multiplication
+and print, which both cost *O(1)*. The inner for loop runs *n* times, which means each outer for loop iteration costs *O(n)*.
+The outer for loop runs *O(n)* times, which gives a time complexity of *O(n * n) = O(n<sup>2</sup>)*.
+
+```js
+// Given an integer arrays "arr1" with length n and "arr2" with length m,
+
+for ( let i = 0; i < arr1.length; i++ ) {
+    console.log(arr1[i]);
+}
+
+for ( let i = 0; i < arr1.length; i++ ) {
+    console.log(arr1[i]);
+}
+
+for ( let j = 0; j < arr2.length; j++ ) {
+    console.log(arr2[j]);
+} 
+```
+
+This algorithm has a time complexity of *O(n + m)*. The first two for loops both cost *O(n)*, whereas the final for loop
+costs *O(m)*. This fives a time complexity of *O(2n + m) = O(n + m)*.
+
+```js
+// Given an integer array "arr" with length n,
+
+for ( let i = 0; i < arr.length; i++ ) {
+    for ( let j = i; j < arr.length; j++ ) {
+        console.log(arr[i] * arr[j]);
+    }
+}
+```
+
+This algorithm has a time complexity of *O(n<sup>2</sup>)*. The inner for loop is dependent on what iteration the outer
+for loop is currently on. The first time the inner for loop is run, it runs *n* times. The second time, it runs *n - 1* times,
+then *n - 2*, *n - 3*, and so on.
+
+That means the total iterations is 1 + 2 + 3 + 4 + ... + n is the partial sum of [this series](https://en.wikipedia.org/wiki/1_%2B_2_%2B_3_%2B_4_%2B_%E2%8B%AF#Partial_sums).
+In bit O notation, this is *O(n<sup>2</sup>)* because the addition term in the numerator and the constant term in the denominator
+are both ignored.
+
+<hr>
+
+**Logarithmic time**
+
+A logarithm is the inverse operation to exponents. The time complexity *O(log n)* is called logarithmic time and is
+**extremely** fast. A common time complexity is *O(n * log n)*, which is reasonably fast for most problems and also the 
+time complexity of efficient sorting algorithms.
+
+Typically, the base of the logarithm will be `2`. This means that if your input is size `n`, then the algorithm will perform
+`x` operations, where *2<sup>x</sup> = n*. However, the base of the logarithm [doesn't actually matter](https://stackoverflow.com/questions/1569702/is-big-ologn-log-base-e/1569710#1569710)
+for big O, since all logarithms are related by a constant factor.
+
+*O(log n)* means that somewhere in your algorithm, the input is being reduced by a percentage at every step. A good example
+of this is binary search, which is a searching algorithm that runs in *O(log n)* time. With binary search, we initially
+consider the entire inout. After the first step, we only consider `n / 2` elements. After the second step, we only consider
+`n / 4` elements, and so on. At each step, we are reducing our search space by 50%, which gives us a logarithmic time complexity.
+
+<hr>
